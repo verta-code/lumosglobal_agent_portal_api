@@ -10,28 +10,33 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiController extends Controller
 {
-    // Register API (POST, form-data)
-    public function register(Request $request)
+    // Add admin User API (POST, form-data)
+    public function createNewUser(Request $request)
     {
 
         // Data validation
         $request->validate([
-            "name" => "required",
+            "fname" => "required",
+            "lname" => "required",
             "email" => "required|email|unique:users",
-            "password" => "required|confirmed"
+            "password" => "required|confirmed",
+            "role" => "required"
+
         ]);
 
         // Data save
         User::create([
-            "name" => $request->name,
+            "fname" => $request->fname,
+            "lname" => $request->lname,
             "email" => $request->email,
-            "password" => Hash::make($request->password)
+            "password" => Hash::make($request->password),
+            "role" => $request->role
         ]);
 
         // Response
         return response()->json([
             "status" => true,
-            "message" => "User registered successfully"
+            "message" => "Admin User Created successfully"
         ]);
     }
 
