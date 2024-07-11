@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('fname');
-            $table->string('lname');
+            $table->string('organizationName');
+            $table->string('legalEntityName')->nullable();;
+            $table->string('firstName');
+            $table->string('lastName');
+            $table->enum('agentRole',['admin','agent','director','counsellor','owner','ceo','regioanl manager','franchise owner','marketing','manager'])->default('agent');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role');
-            $table->string('status')->default('Active');
+            $table->string('mobile_number')->unique();
+            $table->enum('Country', ['bangladesh', 'australia', 'other'])->default('bangladesh');
+            $table->enum('status',['active','inactive'])->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
